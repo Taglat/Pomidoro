@@ -1,7 +1,7 @@
-import classes from "./App.module.css";
+import Nav from "./components/Nav/Nav";
 
 function App() {
-  return <div></div>;
+  return <div><Nav /></div>;
 }
 
 export default App;
