@@ -1,7 +1,7 @@
 import cl from './Timer.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useState } from "react";
-import { setMode } from "../../redux/timerSlice";
+import { setMode, setTimeLeft } from "../../redux/timerSlice";
 import { formatTime } from '../../helpers/formatTime';
 import { styled } from 'styled-components';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
@@ -26,11 +26,17 @@ const Timer = () => {
     const [ticking, setTicking] = useState(false);
 
     const jumpTo = useCallback((id) => {
+        dispatch(setTimeLeft())
         dispatch(setMode(id));
     }, [dispatch]);
 
     const handleToggle = () => {
         setTicking(!ticking);
+    }
+
+    const stop = () => {
+        const modeTime = modes[mode].time; 
+        dispatch(setTimeLeft({mode, modeTime}));
     }
 
   return (
@@ -41,13 +47,13 @@ const Timer = () => {
             })}
         </nav>
         <div className={cl.display}>
-            {formatTime(modes[mode].time)}
+            {formatTime(modes[mode].setTimeLeft)}
         </div>
         <div className={cl.btns}>
             <ToggleBtn ticking={ticking} onClick={handleToggle}>
                 {ticking ? <PauseCircleIcon /> : <PlayCircleIcon />}
             </ToggleBtn>
-            <StopBtn onClick={handleToggle}>
+            <StopBtn onClick={stop}>
                 <StopCircleIcon />
             </StopBtn>
         </div>
