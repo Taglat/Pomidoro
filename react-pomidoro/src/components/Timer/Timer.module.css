@@ -26,3 +26,8 @@
     width: 100%;
     padding: 10px 0;
 }
+.btns {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
