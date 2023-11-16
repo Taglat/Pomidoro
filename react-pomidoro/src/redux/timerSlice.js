@@ -6,15 +6,15 @@ const initialState = {
     modes: {
         [POMODORO]: {
             id: POMODORO,
-            time: 25, 
+            time: 25 * 60, 
         }, 
         [SHORT_BREAK]: {
             id: SHORT_BREAK,
-            time: 10,
+            time: 10 * 60,
         },
         [LONG_BREAK]: {
             id: LONG_BREAK,
-            time: 5,
+            time: 5 * 60,
         },
     },
 }

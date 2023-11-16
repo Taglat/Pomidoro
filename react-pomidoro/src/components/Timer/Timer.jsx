@@ -2,6 +2,7 @@ import cl from './Timer.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { setMode } from "../../redux/timerSlice";
+import { formatTime } from '../../helpers/formatTime';
 
 const Timer = () => {
     const {mode, modes} = useSelector(state => state.timer);
@@ -18,7 +19,7 @@ const Timer = () => {
             })}
         </nav>
         <div className={cl.display}>
-            {modes[mode].time}
+            {formatTime(modes[mode].time)}
         </div>
     </div>
   )
