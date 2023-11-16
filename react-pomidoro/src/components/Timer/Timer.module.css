@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 10px auto;
+    width: 287px;
+}
+.nav {
+    display: flex;
+    gap: 10px;
+}
+.modeBtn {
+    padding: 5px 10px;    
+    background-color: red;
+}
+.modeBtn:active {
+    background-color: green;
+}
+.display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    color: #fff;
+    width: 100%;
+    padding: 10px 0;
+}

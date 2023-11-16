@@ -1,12 +1,10 @@
 import st from "./App.module.css";
-import Display from "./components/Display/Display";
-import Nav from "./components/Nav/Nav";
+import Timer from "./components/Timer/Timer";
 
 function App() {
   return (
     <div className={st.container}>
-      <Nav />
-      <Display />
+       <Timer />
     </div>
   );
 }
