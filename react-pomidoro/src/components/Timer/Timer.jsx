@@ -8,16 +8,17 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import useCountdown from '../../hooks/useCountdown';
+import '../../styles/fonts/Cracked\ Code.ttf';
 
 const ToggleBtn = styled.button`
     padding: 5px 5px;
     cursor: pointer;
-    background-color: ${props => props.ticking ? 'gray' : 'green'}; /* Замените 'red' и 'green' на ваши цвета */
+    background-color: ${props => props.ticking ? 'var(--pause-color)' : 'var(--primary-color)'}; /* Замените 'red' и 'green' на ваши цвета */
 `
 const StopBtn = styled.button`
     padding: 5px 5px;
     cursor: pointer;
-    background-color: red
+    background-color: var(--reset-color)
 `
 
 const Timer = () => {
@@ -52,8 +53,8 @@ const Timer = () => {
   return (
     <div className={cl.container}>
         <nav className={cl.nav}>
-            {Object.values(modes).map(({id}) => {
-                return <button className={cl.modeBtn} key={id} active={id === mode} id={id} onClick={() => jumpTo(id)}>{id}</button> 
+            {Object.values(modes).map(({id, icon, time}) => {
+                return <button className={`${cl.modeBtn} ${id === mode ? cl.modeBtn_active : ''}`} key={id} active={id === mode} id={id} onClick={() => jumpTo(id)} title={`${id} : ${time / 60} min`} >{icon}</button> 
             })}
         </nav>
         <div className={cl.display}>

@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Cracked Code';
+    src: local("Cracked Code"), url('./fonts/Cracked\ Code.ttf') format('truetype');
+}
+
+:root {
+    --primary-color: #1c891c;
+    --container-color: #006400;
+    --bg-color: #000;
+    --pause-color: #0d374e;
+    --reset-color: #d5303d;
+    --border-light: #a8ced0;
+    ---ff-display: "Cracked Code"; 
+    --f-size: 1.6rem;
+}
