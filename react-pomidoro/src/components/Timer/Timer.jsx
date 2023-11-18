@@ -1,12 +1,13 @@
 import cl from './Timer.module.css';
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useState } from "react";
-import { setMode, setTimeLeft } from "../../redux/timerSlice";
+import { useCallback } from "react";
+import { setMode } from "../../redux/timerSlice";
 import { formatTime } from '../../helpers/formatTime';
 import { styled } from 'styled-components';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
+import useCountdown from '../../hooks/useCountdown';
 
 const ToggleBtn = styled.button`
     padding: 5px 5px;
@@ -23,21 +24,30 @@ const Timer = () => {
     const {mode, modes} = useSelector(state => state.timer);
     const dispatch = useDispatch();
 
-    const [ticking, setTicking] = useState(false);
+    const {ticking, start, stop, reset, timeLeft} = useCountdown({
+        minutes: modes[mode].time,
+        leftMinutes: modes[mode].timeLeft,
+        onStart: () => {},
+        onStop: () => {},
+        onComplete: () => {},
+    });
 
     const jumpTo = useCallback((id) => {
-        dispatch(setTimeLeft())
         dispatch(setMode(id));
     }, [dispatch]);
 
-    const handleToggle = () => {
-        setTicking(!ticking);
-    }
 
-    const stop = () => {
-        const modeTime = modes[mode].time; 
-        dispatch(setTimeLeft({mode, modeTime}));
-    }
+    const toggleTimer = useCallback(() => {
+        if (ticking) {
+            stop(); 
+        } else {
+            start();
+        }
+    }, [start, stop, ticking]);
+
+    const resetTimer = useCallback(() => {
+        reset();
+    }, [modes])
 
   return (
     <div className={cl.container}>
@@ -47,13 +57,13 @@ const Timer = () => {
             })}
         </nav>
         <div className={cl.display}>
-            {formatTime(modes[mode].setTimeLeft)}
+            {formatTime(timeLeft)}
         </div>
         <div className={cl.btns}>
-            <ToggleBtn ticking={ticking} onClick={handleToggle}>
+            <ToggleBtn ticking={ticking} onClick={() => toggleTimer()}>
                 {ticking ? <PauseCircleIcon /> : <PlayCircleIcon />}
             </ToggleBtn>
-            <StopBtn onClick={stop}>
+            <StopBtn onClick={() => resetTimer()}>
                 <StopCircleIcon />
             </StopBtn>
         </div>
