@@ -9,6 +9,28 @@ import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import useCountdown from '../../hooks/useCountdown';
 import '../../styles/fonts/Cracked\ Code.ttf';
+import { player } from '../../helpers/soundPlayer';
+import { START_SOUND, TICK_SOUND, FINISH_SOUND, POMODORO, LONG_BREAK, SHORT_BREAK, LONG_BREAK_TICK, SHORT_BREAK_TICK, POMODORO_FINISH_SOUND } from '../../redux/constants';
+
+const startSound = player({
+    asset: START_SOUND,
+});  
+const tickingSound = player({
+    asset: TICK_SOUND,
+    loop: true,
+});
+const shortTickingSound = player({
+    asset: SHORT_BREAK_TICK,
+    loop: true,
+});
+const longTickSound = player({
+    asset: LONG_BREAK_TICK,
+    loop: true, 
+})
+const finishSound = player({
+    asset: FINISH_SOUND,
+});
+
 
 const ToggleBtn = styled.button`
     padding: 5px 5px;
@@ -28,17 +50,30 @@ const Timer = () => {
     const {ticking, start, stop, reset, timeLeft} = useCountdown({
         minutes: modes[mode].time,
         leftMinutes: modes[mode].timeLeft,
-        onStart: () => {},
-        onStop: () => {},
-        onComplete: () => {},
+        onStart: () => {
+            if (mode === POMODORO) {
+                tickingSound.play();
+            } 
+        },
+        onStop: () => {
+            tickingSound.stop();
+        },
+        onComplete: () => {
+            if (mode === POMODORO) {
+                tickingSound.stop();
+            }
+            finishSound.play();
+        },
     });
 
     const jumpTo = useCallback((id) => {
         dispatch(setMode(id));
+        stop();
     }, [dispatch]);
 
 
     const toggleTimer = useCallback(() => {
+        startSound.play()
         if (ticking) {
             stop(); 
         } else {
