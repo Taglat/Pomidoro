@@ -1,6 +1,6 @@
 import cl from './Timer.module.css';
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect} from "react";
 import { setMode, setVolume} from "../../redux/timerSlice";
 import { formatTime } from '../../helpers/formatTime';
 import { styled } from 'styled-components';
@@ -53,10 +53,9 @@ const iconMap = {
 const Timer = () => {
     const {mode, modes, volume} = useSelector(state => state.timer);
     const dispatch = useDispatch();
-    console.log(volume)
+
     const {ticking, start, stop, reset, timeLeft} = useCountdown({
         minutes: modes[mode].time,
-        leftMinutes: modes[mode].timeLeft,
         onStart: () => {
             if (mode === POMODORO) {
                 tickingSound.play();
@@ -75,8 +74,8 @@ const Timer = () => {
 
     const jumpTo = useCallback((id) => {
         dispatch(setMode(id));
-        stop();
-    }, [dispatch]);
+        reset();
+    }, [dispatch, reset]);
 
 
     const toggleTimer = useCallback(() => {
@@ -90,7 +89,7 @@ const Timer = () => {
 
     const resetTimer = useCallback(() => {
         reset();
-    }, [modes])
+    }, [mode])
 
     const toggleVolume = useCallback(() => {
         let newVolume;

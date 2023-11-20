@@ -12,12 +12,12 @@ const initialState = {
         }, 
         [SHORT_BREAK]: {
             id: SHORT_BREAK,
-            time: 10 * 60,
+            time: 5 * 60,
             iconName: 'SportsEsportsIcon',
         },
         [LONG_BREAK]: {
             id: LONG_BREAK,
-            time: 5 * 60,
+            time: 10 * 60,
             iconName: 'BedtimeIcon',
         },
     },
