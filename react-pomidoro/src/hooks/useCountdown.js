@@ -49,7 +49,7 @@ export default function useCountdown({minutes, onStart, onStop, onComplete}) {
     const reset = useCallback(() => {
         setTicking(false);
         onStop?.();
-        setTimeLeft(minutes)
+        setTimeLeft(time)
     }, [onStop]);
 
     return {
